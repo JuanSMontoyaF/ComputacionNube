@@ -5,19 +5,30 @@
 ![](https://i.imgur.com/XBDrYar.png)
 
 ## Instalación LXD
+````
 sudo apt-get install lxd -y
-
+````
 ### Luego ejecute el siguiente comando para loguearse en el nuevo grupo creado:
+````
 newgrp lxd
+````
 
 ### Iniciar LXD
+````
 lxd init --auto
-
+````
+![](https://i.imgur.com/XBDrYar.png)
 
 # Configuración del contenedor
+### Se crea un contenedor con el nombre server
+````
 lxc launch ubuntu:20.04 server
+````
 ### listar contenedores
+````
 lxc list
+````
+
 ### Detalles del estado de ejecucuón 
 lxc info server
 lxc config show server

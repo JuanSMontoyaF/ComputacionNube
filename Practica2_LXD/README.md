@@ -47,18 +47,26 @@ lxc exec server -- free -m
 ![](https://i.imgur.com/XBDrYar.png)
 
 # Configuración servidor Web Apache
+````
 lxc launch ubuntu:20.04 server
+````
 
 ### instalar apache
+````
 lxc exec server -- apt-get install apache2 -y
+````
 
 ### Verificar el estado del servicio
+````
 lxc exec server -- systemctl status apache2
+````
 
 ![imagen4](https://github.com/JuanSMontoyaF/ComputacionNube/blob/master/Practica2_LXD/imagenes/imagen4.png)
 
 ### Verificar la existencia del index
+````
 lxc exec server -- ls /var/www/html
+````
 
 ### Crear un nuevo index fuera del contenedor
 ```

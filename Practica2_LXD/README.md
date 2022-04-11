@@ -35,14 +35,14 @@ lxc list
 lxc info server
 lxc config show server
 ````
-![imagen2]()
+![imagen2](https://github.com/JuanSMontoyaF/ComputacionNube/blob/master/Practica2_LXD/imagenes/imagen2.png)
 
 ### Limitar los recursos
 ```
 lxc config set server limits.memory 64MB
 lxc exec server -- free -m
 ```
-![imagen3]()
+![imagen3](https://github.com/JuanSMontoyaF/ComputacionNube/blob/master/Practica2_LXD/imagenes/imagen3.png)
 
 # Configuración servidor Web Apache
 lxc launch ubuntu:20.04 server
@@ -53,7 +53,7 @@ lxc exec server -- apt-get install apache2 -y
 ### Verificar el estado del servicio
 lxc exec server -- systemctl status apache2
 
-![imagen4]()
+![imagen4](https://github.com/JuanSMontoyaF/ComputacionNube/blob/master/Practica2_LXD/imagenes/imagen4.png)
 
 ### Verificar la existencia del index
 lxc exec server -- ls /var/www/html
@@ -73,14 +73,14 @@ lxc file push index.html server/var/www/html/index.html
 
 ### Verificar su contenido
 lxc exec server -- cat /var/www/html/index.html
-![imagen5]()
+![imagen5](https://github.com/JuanSMontoyaF/ComputacionNube/blob/master/Practica2_LXD/imagenes/imagen5.png)
 
 ### Reiniciar el servicio
 lxc exec server -- systemctl restart apache2
 
 ### Probar usando Curl
 curl 10.216.201.122
-![imagen6]()
+![imagen6](https://github.com/JuanSMontoyaF/ComputacionNube/blob/master/Practica2_LXD/imagenes/imagen6.png)
 
 # Reenvio de puertos 
 ## Puerto 80
@@ -90,9 +90,9 @@ lxc config device add server myport22 proxy listen=tcp:192.168.100.3:6080 connec
 
 ###Verificar los dispositivos creados
 lxc config device show server
-![imagen7]()
+![imagen7](https://github.com/JuanSMontoyaF/ComputacionNube/blob/master/Practica2_LXD/imagenes/imagen7.png)
 ### Compruebe el servicio por fuera de la maquina vagrant
-![imagen8]()
+![imagen8](https://github.com/JuanSMontoyaF/ComputacionNube/blob/master/Practica2_LXD/imagenes/imagen8.png)
 
 # Configuración Servidor SSH en el contenedor
 ### Habilitar autenticación por password en SSH en el contenedor
@@ -101,7 +101,7 @@ vim /etc/ssh/sshd_config
 
 ### Busque el parámetro PasswordAuthentication  y configúrelo como yes:
 PasswordAuthentication yes
-![imagen9]()
+![imagen9](https://github.com/JuanSMontoyaF/ComputacionNube/blob/master/Practica2_LXD/imagenes/imagen9.png)
 
 ### Se reinicia el servicio
 service sshd restart
@@ -115,15 +115,15 @@ exit
 verificamos el acceso con ssh 
 ssh remoto@10.216.201.122
 
-![imagen10]()
+![imagen10](https://github.com/JuanSMontoyaF/ComputacionNube/blob/master/Practica2_LXD/imagenes/imagen10.png)
 
 # Crear par de claves SSH 
 ssh-keygen
-![imagen11]()
+![imagen11](https://github.com/JuanSMontoyaF/ComputacionNube/blob/master/Practica2_LXD/imagenes/imagen11.png)
 
 ### Se copia la clave pública en el contenedor
 ssh-copy-id remoto@10.216.201.122
-![imagen12]()
+![imagen12](https://github.com/JuanSMontoyaF/ComputacionNube/blob/master/Practica2_LXD/imagenes/imagen12.png)
 
 # DESDE EL CLIENTE
 ### Generar el par de claves
@@ -134,10 +134,10 @@ ssh-copy-id -p 6080 remoto@192.168.100.3
 
 ### Iniciar sesión remotamente 
 ssh -p 6080 remoto@192.168.100.3
-![imagen13]()
+![imagen13](https://github.com/JuanSMontoyaF/ComputacionNube/blob/master/Practica2_LXD/imagenes/imagen13.png)
 
 ### Transferir un archivo al servidor usando scp
-![imagen14]()
+![imagen14](https://github.com/JuanSMontoyaF/ComputacionNube/blob/master/Practica2_LXD/imagenes/imagen14.png)
 
 
 

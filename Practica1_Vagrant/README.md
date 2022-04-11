@@ -11,8 +11,8 @@
 ![](https://i.imgur.com/XBDrYar.png)
 
 ## Actualización de paquetes
-* sudo apt-get install update -y
-* sudo apt-get install upgrade -y
+* sudo apt-get update -y
+* sudo apt-get upgrade -y
 
 ![](https://i.imgur.com/XBDrYar.png)
 

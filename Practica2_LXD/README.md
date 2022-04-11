@@ -28,29 +28,35 @@ lxc launch ubuntu:20.04 server
 ````
 lxc list
 ````
+![imagen1](https://github.com/JuanSMontoyaF/ComputacionNube/blob/master/Practica2_LXD/imagenes/imagen1.png)
 
 ### Detalles del estado de ejecucuón 
+````
 lxc info server
 lxc config show server
+````
+![imagen2]()
 
 ### Limitar los recursos
 ```
 lxc config set server limits.memory 64MB
 lxc exec server -- free -m
 ```
-
+![imagen3]()
 
 # Configuración servidor Web Apache
 lxc launch ubuntu:20.04 server
 
 ### instalar apache
-lxc exec server -- apt-get install apache2
+lxc exec server -- apt-get install apache2 -y
 
 ### Verificar el estado del servicio
-lxc exec web -- systemctl status apache2
+lxc exec server -- systemctl status apache2
+
+![imagen4]()
 
 ### Verificar la existencia del index
-lxc exec web -- ls /var/www/html
+lxc exec server -- ls /var/www/html
 
 ### Crear un nuevo index fuera del contenedor
 ```
@@ -63,19 +69,18 @@ lxc exec web -- ls /var/www/html
 </html>
 ```
 ### Reemplazar el index en el contenedor
-lxc file push index.html web/var/www/html/index.html
+lxc file push index.html server/var/www/html/index.html
 
 ### Verificar su contenido
-vagrant@servidorUbuntu:~$ lxc exec web -- cat /var/www/html/index.html
+lxc exec server -- cat /var/www/html/index.html
+![imagen5]()
 
 ### Reiniciar el servicio
-lxc exec web -- systemctl restart apache2
-
-### Verificar la ip del contenedor 
-lxc info web
+lxc exec server -- systemctl restart apache2
 
 ### Probar usando Curl
-curl 10.24.66.4
+curl 10.216.201.122
+![imagen6]()
 
 # Reenvio de puertos 
 ## Puerto 80
@@ -84,6 +89,57 @@ lxc config device add server myport80 proxy listen=tcp:192.168.100.3:5080 connec
 lxc config device add server myport22 proxy listen=tcp:192.168.100.3:6080 connect=tcp:127.0.0.1:22
 
 ###Verificar los dispositivos creados
-lxc config device show web
+lxc config device show server
+![imagen7]()
+### Compruebe el servicio por fuera de la maquina vagrant
+![imagen8]()
+
+# Configuración Servidor SSH en el contenedor
+### Habilitar autenticación por password en SSH en el contenedor
+sudo lxc exec server bash
+vim /etc/ssh/sshd_config
+
+### Busque el parámetro PasswordAuthentication  y configúrelo como yes:
+PasswordAuthentication yes
+![imagen9]()
+
+### Se reinicia el servicio
+service sshd restart
+
+### Se añade un nuevo usuario en el contenedor
+adduser remoto
+
+### Salimos del contenedor
+exit
+
+verificamos el acceso con ssh 
+ssh remoto@10.216.201.122
+
+![imagen10]()
+
+# Crear par de claves SSH 
+ssh-keygen
+![imagen11]()
+
+### Se copia la clave pública en el contenedor
+ssh-copy-id remoto@10.216.201.122
+![imagen12]()
+
+# DESDE EL CLIENTE
+### Generar el par de claves
+ssh-keygen
+
+### Copiar la clave publica al contenedor 
+ssh-copy-id -p 6080 remoto@192.168.100.3
+
+### Iniciar sesión remotamente 
+ssh -p 6080 remoto@192.168.100.3
+![imagen13]()
+
+### Transferir un archivo al servidor usando scp
+![imagen14]()
+
+
+
 
 

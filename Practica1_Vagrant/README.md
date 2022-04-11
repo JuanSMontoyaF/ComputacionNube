@@ -17,9 +17,9 @@
 ![](https://i.imgur.com/XBDrYar.png)
 
 ## Instalación Jupyter
-sudo apt install python3-pip -y
-pip3 install jupyter
-pip3 install markupsafe==2.0.1
+* sudo apt install python3-pip -y
+* pip3 install jupyter
+* pip3 install markupsafe==2.0.1
 ![](https://i.imgur.com/XBDrYar.png)
 
 ## Pruebas

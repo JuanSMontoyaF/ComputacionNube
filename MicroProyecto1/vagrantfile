@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
   config.vm.define :haproxy do |haproxy|
     haproxy.vm.box = "bento/ubuntu-20.04"
     haproxy.vm.network :private_network, ip: "192.168.50.2"
-    #haproxy.vm.provision "shell", path: "haproxyServerScript.sh"
+    haproxy.vm.provision "shell", path: "haproxyServerScript.sh"
     haproxy.vm.hostname = "haproxy"
   end
 
@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
      vb.memory = 2048
      vb.cpus = 1
      end
-     #nodo.vm.provision "shell", path: "haproxyClientScript.sh", args: "#{i} 192.168.50.#{1+i}"
+     nodo.vm.provision "shell", path: "haproxyClientScript.sh", args: "#{i} 192.168.50.#{1+i}"
     end
   end
   

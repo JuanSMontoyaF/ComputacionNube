@@ -1,0 +1,28 @@
+---
+storage_pools:
+- name: default
+  driver: dir
+networks:
+- name: lxdbr0
+  type: bridge
+  config:
+    bridge.mode: fan
+    fan.underlay_subnet: auto
+profiles:
+- name: default
+  devices:
+    root:
+      path: /
+      pool: default
+      type: disk
+    eth0:
+      name: eth0
+      nictype: bridged
+      parent: lxdbr0
+      type: nic
+cluster:
+  server_name: webserver2
+  enabled: true
+config:
+  core.trust_password: cluster
+  core.https_address: 192.168.50.4:8443

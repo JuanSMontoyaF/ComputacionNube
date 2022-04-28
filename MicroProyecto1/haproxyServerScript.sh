@@ -1,4 +1,23 @@
 #!/bin/bash
+
+sudo apt-get update
+
+echo "Instalamos LXD"
+sudo apt-get install lxd -y
+
+
+echo "Adicionar usuario al pool del cluster"
+sudo gpasswd -a vagrant lxd
+
+echo "Iniciando LXD"
+sed -i "28d" /vagrant/preseed.yaml
+sudo echo  "  core.https_address: 192.168.50.2:8443" >> /vagrant/preseed.yaml
+cat /vagrant/preseed.yaml | lxd init --preseed
+sleep 50
+echo "Fin de la creación del cluster"
+
+
+
 echo "Instalando Haproxy"
 sudo apt-get update
 sudo apt-get install net-tools -y

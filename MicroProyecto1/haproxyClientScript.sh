@@ -17,9 +17,9 @@ echo "Adicionar usuario al pool del cluster"
 #sudo gpasswd -a vagrant lxd
 
 echo "Iniciando LXD"
-sed -i "28d" /vagrant/preseed.yaml
-sudo echo  "  core.https_address: $2:8443" >> /vagrant/preseed.yaml
-cat /vagrant/preseed.yaml | lxd init --preseed
+sed -i "28d" /vagrant/preseed2.yaml
+sudo echo  "  core.https_address: $2:8443" >> /vagrant/preseed2.yaml
+cat /vagrant/preseed2.yaml | lxd init --preseed
 sleep 50
 echo "Fin de la creación del cluster"
 

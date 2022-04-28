@@ -17,21 +17,30 @@ sleep 50
 echo "Fin de la creación del cluster"
 
 
+echo “[configuración contenedor de haproxy]”
+echo "Creando contenedor de haproxy >> haproxy"
+sudo lxc launch ubuntu:20.04 haproxy --target haproxy
+sleep 20
+
+echo "Runing instances"
+sudo lxc start haproxy
+
+echo "Aplicando un limite de memoria a los contenedores"
+sudo lxc config set haproxy limits.memory 64MB
+
 
 echo "Instalando Haproxy"
-sudo apt-get update
-sudo apt-get install net-tools -y
-sudo apt-get install  haproxy -y
+sudo lxc exec haproxy -- apt-get update
+sudo lxc exec haproxy apt-get install haproxy -y
 
 echo "Configurando Haproxy"
-sudo rm /etc/haproxy/haproxy.cfg
-sudo cp -f /vagrant/haproxy.cfg /etc/haproxy/
+sudo lxc file rm /etc/haproxy/haproxy.cfg
+sudo lxc file push /vagrant/haproxy.cfg /etc/haproxy/
 
 echo "Reinicio de los servicios"
-sudo service haproxy restart 
-sudo apt-get install -y apache2
+sudo lxc exec haproxy -- systemctl restart haproxy
 
-sudo touch 503.http /etc/haproxy/errors/503.http
+sudo lxc haproxy touch 503.http /etc/haproxy/errors/503.http
 cat <<TEST> /etc/haproxy/errors/503.http
 HTTP/1.0 503 Service Unavailable
 Cache-Control: no-cache

@@ -1,10 +1,10 @@
 # Intalación 
 El proyecto consta de tres maquinas virtuales
-* Maquina1 con la IP 192.168.100.3
-* Maquina2 con la IP 192.168.100.4
-* Maquina3 con la IP 192.168.100.5
+* haproxy con la IP 192.168.50.2
+* webserver1 con la IP 192.168.50.3
+* webserver2 con la IP 192.168.50.4
 
-## Maquina1
+## haproxy
 ````
 sudo apt-get update && upgrade -y
 ````
@@ -65,13 +65,13 @@ Configuración del cluster
 
 ### Crear el contenedor
 ````
-sudo lxd launch ubuntu:18.04 nodo1 
+sudo lxd launch ubuntu:18.04 haproxy
 ````
 
 
 
 
-## Maquina2
+## webserver1
 ````
 sudo apt-get update && upgrade -y
 ````
@@ -91,7 +91,7 @@ lxd init
 Configuración del cluster
 ````
 #config:
- # core.https_address: 192.168.100.4:8443
+ # core.https_address: 192.168.50.3:8443
  # core.trust_password: "cluster"
 #networks:
 #- config:
@@ -119,7 +119,7 @@ Configuración del cluster
   #    type: disk
  # name: default
 #cluster:
-  #server_name: maquina2
+  #server_name: web1
   #enabled: true
   #member_config: []
   #cluster_address: ""
@@ -132,16 +132,16 @@ Configuración del cluster
 
 ### Crear el contenedor
 ````
-sudo lxd launch ubuntu:18.04 nodo2 --target maquina2
+sudo lxd launch ubuntu:18.04 web1 --target webserver1
 ````
 Instalar apache 
 ````
-sudo lxc exec nodo2 -- apt-get install apache2 -y
+sudo lxc exec web1 -- apt-get install apache2 -y
 ````
 ### Modificar el index.html
 Entrar al contenedor 
 ````
-lxc exec nodo2 /bin/bash
+lxc exec web1 /bin/bash
 vim /var/wwww/html/index.html
 ````
 
@@ -149,16 +149,16 @@ vim /var/wwww/html/index.html
 <!DOCTYPE html>
 <html>
 <body>
-<h1>Paágina de Prueba de Clúster con containers LXD</h1>
-<p>Bienvenidos a mi contenedor LXD</p>
-<p>Hostname: 192.168.100.4</p>
-<p>Probando el funcionamiento del container con aprovisionamiento</p>
+<h1>Pagina de Prueba de Cluster con containers LXD</h1>
+<p>Bienvenidos al contenedor LXD</p>
+<p>Hostname: 192.168.50.3</p>
+<p>Container con aprovisionamiento</p>
 </body>
 </html>
 ````
 
 
-## Maquina3
+## webserver2
 ````
 sudo apt-get update && upgrade -y
 ````
@@ -178,7 +178,7 @@ lxd init
 Configuración del cluster
 ````
 #config:
- # core.https_address: 192.168.100.5:8443
+ # core.https_address: 192.168.50.4:8443
  # core.trust_password: "cluster"
 #networks:
 #- config:
@@ -206,7 +206,7 @@ Configuración del cluster
   #    type: disk
  # name: default
 #cluster:
-  #server_name: maquina3
+  #server_name: web2
   #enabled: true
   #member_config: []
   #cluster_address: ""
@@ -219,16 +219,16 @@ Configuración del cluster
 
 ### Crear el contenedor
 ````
-sudo lxd launch ubuntu:18.04 nodo3 --target maquina3
+sudo lxd launch ubuntu:18.04 web2 --target webserver2
 ````
 Instalar apache 
 ````
-sudo lxc exec nodo3 -- apt-get install apache2 -y
+sudo lxc exec web2 -- apt-get install apache2 -y
 ````
 ### Modificar el index.html
 Entrar al contenedor 
 ````
-lxc exec nodo2 /bin/bash
+lxc exec web2 /bin/bash
 vim /var/wwww/html/index.html
 ````
 
@@ -237,9 +237,9 @@ vim /var/wwww/html/index.html
 <html>
 <body>
 <h1>Página de Prueba de Clúster con containers LXD</h1>
-<p>Bienvenidos a mi contenedor LXD</p>
-<p>Hostname: 192.168.100.5</p>
-<p>Probando el funcionamiento del container con aprovisionamiento</p>
+<p>Bienvenidos al contenedor LXD</p>
+<p>Hostname: 192.168.50.4</p>
+<p>Container con aprovisionamiento</p>
 </body>
 </html>
 ````
